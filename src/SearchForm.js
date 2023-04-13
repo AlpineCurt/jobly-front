@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+/** This is a controlled Form Component.  Actual searching
+    is handled by the passed function prop: searchFunc */
 const SearchForm = ({searchFunc}) => {
     const [formData, setFormData] = useState({name: ""});
 

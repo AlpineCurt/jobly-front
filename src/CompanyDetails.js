@@ -1,5 +1,7 @@
 import React from "react";
 
+/** Displays name and description of a company and lists
+    all jobs of that company */
 const CompanyDetails = () => {
     return (
         <div>

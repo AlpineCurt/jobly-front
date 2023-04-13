@@ -2,6 +2,7 @@ import React from "react";
 import "./CompanyCard.css";  
 import { Card, CardBody, CardTitle, CardText } from "reactstrap";
 
+/** Single Card that displays name and description of a company */
 const CompanyCard = ({ name, description }) => {
     return (
         <Card className="CompanyCard">
