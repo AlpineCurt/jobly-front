@@ -1,12 +1,15 @@
 import './App.css';
 import Routes from './Routes';
 import NavBar from './NavBar';
+import CurrentUserProvider from './CurrentUserProvider';
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Routes />
+      <CurrentUserProvider>
+        <NavBar />
+        <Routes />
+      </CurrentUserProvider>
     </div>
   );
 }
