@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import CurrentUserContext from "./CurrentUserContext";
-import { Form, Label, Input, Button, FormGroup, Card, CardBody } from "reactstrap";
 
 const Home = () => {
     const {currUser} = useContext(CurrentUserContext);
