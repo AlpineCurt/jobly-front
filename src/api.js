@@ -58,6 +58,12 @@ class JoblyApi {
     return res.user;
   }
 
+  /** Submit Profile Changes */
+  static async profileUpdate(username, formData) {
+    let res = await this.request(`users/${username}`, formData, "patch");
+    return res;
+  }
+
   /** Get details on a company by handle. */
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);

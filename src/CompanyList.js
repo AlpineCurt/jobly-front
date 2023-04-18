@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import JoblyApi from "./api.js";
 import { CardColumns } from "reactstrap";
 import CompanyCard from "./CompanyCard.js";

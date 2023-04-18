@@ -67,8 +67,24 @@ const CurrentUserProvider = ({children}) => {
         }
     }
 
+    /** Update a user's profile.  Returns true upon success.  Throws error otherwise */
+    const userUpdate = async (username, formData) => {
+        try {
+            const res = await JoblyApi.profileUpdate(username, formData);
+            setCurrUser({
+                ...currUser,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email
+            });
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     return (
-        <CurrentUserContext.Provider value={{currUser, token, login, logout, register}}>
+        <CurrentUserContext.Provider value={{currUser, token, login, logout, register, userUpdate}}>
             {children}
         </CurrentUserContext.Provider>
     );
