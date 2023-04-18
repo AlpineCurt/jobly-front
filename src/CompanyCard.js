@@ -1,16 +1,18 @@
 import React from "react";
 import "./CompanyCard.css";  
-import { Card, CardBody, CardTitle, CardText } from "reactstrap";
+import { Card, CardBody, CardTitle, CardText, CardLink } from "reactstrap";
 
 /** Single Card that displays name and description of a company */
-const CompanyCard = ({ name, description }) => {
+const CompanyCard = ({ name, description, handle }) => {
     return (
-        <Card className="CompanyCard">
-            <CardBody>
-                <CardTitle>{name}</CardTitle>
-                <CardText>{description}</CardText>
-            </CardBody>
-        </Card>
+        <CardLink className="CompanyCard" href={`companies/${handle}`}>
+            <Card className="CompanyCard">
+                <CardBody>
+                    <CardTitle>{name}</CardTitle>
+                    <CardText>{description}</CardText>
+                </CardBody>
+            </Card>
+        </CardLink>
     );
 }
 

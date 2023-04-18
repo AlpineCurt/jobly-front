@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import JoblyApi from "./api.js";
 import { CardColumns } from "reactstrap";
 import CompanyCard from "./CompanyCard.js";
@@ -6,6 +6,7 @@ import SearchForm from "./SearchForm.js";
 import "./CompanyList.css";
 
 const CompanyList = () => {
+
     const [companies, setCompanies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -39,7 +40,7 @@ const CompanyList = () => {
             <SearchForm searchFunc={searchCompanies}/>
             <CardColumns>
                 {companies.map(({ name, description, handle }) => (
-                    <CompanyCard name={name} description={description} key={handle}/>
+                    <CompanyCard name={name} description={description} key={handle} handle={handle}/>
                 ))}
             </CardColumns>
         </div>

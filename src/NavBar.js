@@ -23,7 +23,7 @@ const NavBar = () => {
                 </NavItem>
                 <NavItem className="me-4">
                     {currUser
-                    ? <NavLink className="nav-link" to="/" onClick={logout}>Logout {currUser}</NavLink>
+                    ? <NavLink className="nav-link" to="/" onClick={logout}>Logout {currUser.username}</NavLink>
                     : <NavLink className="nav-link" to="/login">Login</NavLink>}
                 </NavItem>
             </Nav>

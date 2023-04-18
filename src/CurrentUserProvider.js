@@ -5,40 +5,42 @@ import JoblyApi from "./api.js";
 import jwtDecode from "jwt-decode";
 
 const CurrentUserProvider = ({children}) => {
-    const [currUser, setCurrUser] = useState(null);  // crashes if set to {}
+    const [currUser, setCurrUser] = useState(null);
     const [token, setToken] = useState(null);
     const history = useHistory();
+    
+    // checks for token in localStorage and sets State
+    async function getUserInfo (token) {
+        try {
+            setToken(token);
+            JoblyApi.token = token;
+            const {username} = jwtDecode(token);
+            const res = await JoblyApi.getCurrentUser(username);
+            setCurrUser(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    // after first render, check local storage for token
+    // after first render, check local storage for currUser
     useEffect(() => {
-        async function getUserInfo () {
-            const userToken = localStorage.getItem("joblyToken");
-            if (userToken) {
-                try {
-                    setToken(userToken);
-                    JoblyApi.token = userToken;
-                    const {username} = jwtDecode(userToken);
-                    const res = await JoblyApi.getCurrentUser(username);
-                    // works upto here.  
-                    // debugger;
-                    // setCurrUser(res);  // crashes here.  Why can't I set this to an object?
-                } catch (error) {
-                    console.log(error);
-                }
+        const userToken = localStorage.getItem("joblyToken");
+        if (userToken && !currUser) {
+            try {
+                getUserInfo(userToken);
+            } catch (error) {
+                console.log(error);
             }
         }
-        getUserInfo();
-        console.log("currUser: ", currUser);
     }, []);
 
     const login = async (username, password) => {
         try {
             const res = await JoblyApi.login(username, password);
             setToken(res);
-            setCurrUser(username);
             JoblyApi.token = res;
             localStorage.setItem("joblyToken", res);
-            //localStorage.setItem("joblyUsername", username);
+            await getUserInfo(res);
             history.push("/");
         } catch (error) {
             throw error;
@@ -47,9 +49,8 @@ const CurrentUserProvider = ({children}) => {
 
     const logout = () => {
         setCurrUser(null);
-        setToken("");
+        setToken(null);
         localStorage.removeItem("joblyToken");
-        localStorage.removeItem("joblyUsername");
         history.push("/");
     }
 
@@ -57,7 +58,7 @@ const CurrentUserProvider = ({children}) => {
         try {
             const res = await JoblyApi.register(formData);
             setToken(res);
-            setCurrUser(formData.username);
+            setCurrUser(formData);
             JoblyApi.token = res;
             localStorage.setItem("joblyToken", res);
             history.push("/");
