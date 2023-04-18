@@ -38,13 +38,14 @@ const JobList = () => {
         <div className="JobList col-md-8 offset-md-2">
             <SearchForm searchFunc={searchJobs}/>
             <CardColumns>
-                {jobs.map(({ title, companyName, salary, equity, companyHandle }) => (
+                {jobs.map(({ title, companyName, salary, equity, id }) => (
                     <JobCard
                         title={title}
                         company={companyName}
                         salary={salary}
                         equity={equity}
                         key={uuid()}
+                        id={id}
                     />
                 ))}
             </CardColumns>

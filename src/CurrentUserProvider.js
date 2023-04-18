@@ -7,6 +7,7 @@ import jwtDecode from "jwt-decode";
 const CurrentUserProvider = ({children}) => {
     const [currUser, setCurrUser] = useState(null);
     const [token, setToken] = useState(null);
+    const [jobApps, setJobApps] = useState(new Set([]));
     const history = useHistory();
     
     // checks for token in localStorage and sets State
@@ -83,8 +84,24 @@ const CurrentUserProvider = ({children}) => {
         }
     }
 
+    /** Check if user has applied to a job */
+    const applied = (id) => {
+        if (jobApps.has(id)) return true;
+    }
+
+    /** Apply to a job, update jobApps */
+    const apply = async (id) => {
+        try {
+            await JoblyApi.apply(currUser.username, id);
+        } catch (error) {
+            console.log(error);
+        }
+        const newSet = new Set([id]);
+        setJobApps(new Set([...jobApps, id]));
+    }
+
     return (
-        <CurrentUserContext.Provider value={{currUser, token, login, logout, register, userUpdate}}>
+        <CurrentUserContext.Provider value={{currUser, token, login, logout, register, userUpdate, applied, apply}}>
             {children}
         </CurrentUserContext.Provider>
     );
