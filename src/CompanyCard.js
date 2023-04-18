@@ -1,24 +1,20 @@
 import React from "react";
 import "./CompanyCard.css";  
-import { Card, CardBody, CardTitle, CardText, CardLink } from "reactstrap";
+import { Card, CardBody, CardTitle, CardText } from "reactstrap";
+import { Link } from "react-router-dom";
 
 /** Single Card that displays name and description of a company */
 const CompanyCard = ({ name, description, handle }) => {
     return (
-        <CardLink className="CompanyCard" href={`companies/${handle}`}>
+        <Link className="CompanyCard" to={`companies/${handle}`}>
             <Card className="CompanyCard">
                 <CardBody>
                     <CardTitle>{name}</CardTitle>
                     <CardText>{description}</CardText>
                 </CardBody>
             </Card>
-        </CardLink>
+        </Link>
     );
-}
-
-CompanyCard.defaultProps = {
-    companyName: "DramCorp",
-    description: "We're all happy working here! :D"
 }
 
 export default CompanyCard;

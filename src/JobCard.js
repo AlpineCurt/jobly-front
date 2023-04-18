@@ -8,7 +8,6 @@ import CurrentUserContext from "./CurrentUserContext";
 const JobCard = ({ title, company, salary, equity, id }) => {
     const { applied, apply } = useContext(CurrentUserContext);
     const [hasApplied, setHasApplied] = useState(false);
-    //debugger;
 
     const handleApply = (e) => {
         if (applied(id)) return;
@@ -16,10 +15,8 @@ const JobCard = ({ title, company, salary, equity, id }) => {
         setHasApplied(true)
     }
 
-    /** check if applied and set state of hasApplied */
+    /** Check if already applied and set state of hasApplied */
     useEffect(() => {
-        if (id === 200) {
-        }
         setHasApplied(applied(id));
     }, []);
 

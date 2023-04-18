@@ -12,19 +12,19 @@ const CompanyDetails = () => {
     const [jobs, setJobs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [company, setCompany] = useState(null);
-    
+
     useEffect(() => {
-        async function getJobs() {
-            const res = await JoblyApi.getJobsByCompany(handle);
-            setJobs(res);
-        }
-        getJobs();
-        async function getCompanyInfo() {
+        async function getCompany() {
+            try {
             const res = await JoblyApi.getCompany(handle);
-            setCompany(res);
+            setCompany(res.company);
+            setJobs(res.company.jobs);
             setIsLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
         }
-        getCompanyInfo();
+        getCompany();
     }, []);
 
     if (isLoading) {
@@ -36,8 +36,8 @@ const CompanyDetails = () => {
             <h4>{company.name}</h4>
             <p>{company.description}</p>
             <CardColumns>
-                {jobs.map(({title, salary, equity}) => (
-                    <JobCard title={title} salary={salary} equity={equity}/>
+                {jobs.map(({title, salary, equity, id}) => (
+                    <JobCard title={title} salary={salary} equity={equity} id={id}/>
                 ))}
             </CardColumns>
         </div>
